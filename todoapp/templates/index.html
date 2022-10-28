@@ -1,0 +1,73 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="row p-O mt-4">
+    <div>
+        <h1>Add Your TODO</h1>
+        <form method="post" action="/add-todo/">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <hr>
+            <input class="btn btn-info" type="submit" value="Add TODO">
+
+        </form>
+    </div>
+
+
+    <div>
+        <br>
+        <br>
+        <div class="col">
+            <div class="border">
+
+                {% if todos|length == 0 %}
+                <div class="alert alert-info">
+                    <p class="display-4">Empty Todos</p>
+
+                </div>
+
+                {% else %}
+                <div>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Priority</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for todo in todos %}
+                        <tr>
+
+                            <td>{{ forloop.counter}}</td>
+                            <td>{{ todo.title }}</td>
+                            <td>{{ todo.status }}</td>
+                            <td>{{ todo.priority }}</td>
+                            <td><a href="/delete-todo/{{todo.id}}" class="btn btn-danger">delete</a></td>
+                        </tr>
+
+
+                        {% endfor %}
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+{% endblock %}
+
